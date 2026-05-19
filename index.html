@@ -756,6 +756,117 @@
     letter-spacing: 0.5rem;
   }
 
+  /* ---- GALLERY ---- */
+  #gallery {
+    background: var(--charcoal);
+    padding: 8rem 0;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto;
+    gap: 6px;
+    margin-top: 3rem;
+  }
+
+  .gallery-item {
+    overflow: hidden;
+    position: relative;
+    background: var(--soil);
+    opacity: 0;
+    transform: scale(0.97);
+    transition: opacity 0.7s, transform 0.7s;
+  }
+
+  .gallery-item.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+    filter: saturate(0.85) brightness(0.9);
+  }
+
+  .gallery-item:hover img {
+    transform: scale(1.04);
+    filter: saturate(1) brightness(1);
+  }
+
+  /* First image spans 2 columns, taller */
+  .gallery-item:nth-child(1) {
+    grid-column: span 2;
+    height: 420px;
+  }
+
+  /* Second image normal */
+  .gallery-item:nth-child(2) {
+    height: 420px;
+  }
+
+  /* Bottom row: three equal */
+  .gallery-item:nth-child(3),
+  .gallery-item:nth-child(4),
+  .gallery-item:nth-child(5) {
+    height: 300px;
+  }
+
+  /* Sketch image: dark bg, object-fit contain */
+  .gallery-item:nth-child(6) {
+    height: 300px;
+    background: #f4efe0;
+  }
+
+  .gallery-item:nth-child(6) img {
+    object-fit: contain;
+    filter: none;
+    padding: 1rem;
+  }
+
+  .gallery-item:nth-child(6):hover img {
+    filter: none;
+  }
+
+  .gallery-caption {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 1rem 1.2rem;
+    background: linear-gradient(to top, rgba(26,21,16,0.85), transparent);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--sage);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .gallery-item:hover .gallery-caption {
+    opacity: 1;
+  }
+
+  @media (max-width: 900px) {
+    .gallery-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .gallery-item:nth-child(1) {
+      grid-column: span 2;
+      height: 260px;
+    }
+    .gallery-item:nth-child(2),
+    .gallery-item:nth-child(3),
+    .gallery-item:nth-child(4),
+    .gallery-item:nth-child(5),
+    .gallery-item:nth-child(6) {
+      height: 200px;
+    }
+  }
+
   /* ---- ANIMATIONS ---- */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(30px); }
@@ -974,6 +1085,41 @@
 </section>
 
 
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="container">
+    <div class="section-label">The Work</div>
+    <h2 class="section-title">From the Field</h2>
+
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <img src="img1.jpeg" alt="Syntropic agroforestry field in progress">
+        <div class="gallery-caption">Syntropic Agroforestry · Field Work</div>
+      </div>
+      <div class="gallery-item">
+        <img src="img2.jpeg" alt="Mature rain tree at farm site">
+        <div class="gallery-caption">Mature Rain Tree · Site Survey</div>
+      </div>
+      <div class="gallery-item">
+        <img src="img3.jpeg" alt="Looking up through the forest canopy">
+        <div class="gallery-caption">Canopy · Forest Reading</div>
+      </div>
+      <div class="gallery-item">
+        <img src="img5.jpeg" alt="Mexican sunflowers in bloom">
+        <div class="gallery-caption">Mexican Sunflowers · Matahari Project</div>
+      </div>
+      <div class="gallery-item">
+        <img src="img6.jpeg" alt="Farmer working on urban garden beds">
+        <div class="gallery-caption">Urban Garden Installation · TTDI</div>
+      </div>
+      <div class="gallery-item">
+        <img src="img4.jpeg" alt="Hand-drawn sketch of a potted tree by Nazreen">
+        <div class="gallery-caption">Sketch · Nazreen Abraham Stein</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- IMPACT -->
 <section id="impact">
   <div class="container">
@@ -1055,7 +1201,7 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.15 });
 
-document.querySelectorAll('.value-card, .service-card, .package-card, .impact-stat').forEach(el => {
+document.querySelectorAll('.value-card, .service-card, .package-card, .impact-stat, .gallery-item').forEach(el => {
   observer.observe(el);
 });
 
@@ -1069,7 +1215,10 @@ document.querySelectorAll('.service-card').forEach((el, i) => {
 document.querySelectorAll('.package-card').forEach((el, i) => {
   el.style.transitionDelay = `${i * 0.12}s`;
 });
-document.querySelectorAll('.impact-stat').forEach((el, i) => {
+document.querySelectorAll('.gallery-item').forEach((el, i) => {
+  el.style.transitionDelay = `${i * 0.1}s`;
+});
+
   el.style.transitionDelay = `${i * 0.12}s`;
 });
 </script>
